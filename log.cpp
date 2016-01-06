@@ -14,7 +14,7 @@ LogWriter WARN_W;
 LogWriter INFO_W;
 __thread char LogWriter::m_buffer[M_LOG_BUFFSIZE];
 
-bool log_init(LogLevel l, const char* modulename, const char* logdir, bool verbose) {
+bool logInit(LogLevel l, const char* modulename, const char* logdir, bool verbose) {
 	if (access(logdir, 0) == -1) {
 		if (mkdir(logdir, S_IRWXU) < 0) {
 			fprintf(stderr, "%s create folder failed\n", logdir);
@@ -126,7 +126,7 @@ bool LogWriter::log(LogLevel l, const char* logformat,...) {
 
 	if(m_verbose)
 		fprintf(stderr, "%s", m_buffer);
-	
+
 	if(fp)
 		write(m_buffer, size);
 	return true;
@@ -166,4 +166,8 @@ bool LogWriter::logclose() {
 	fclose(fp);
 	fp = NULL;
 	return true;
+}
+
+void LogWriter::removeConsole() {
+	m_verbose = false;
 }

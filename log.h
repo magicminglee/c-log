@@ -17,9 +17,10 @@ class LogWriter {
 		LogWriter();
 		~LogWriter();
 		bool loginit(LogLevel l, const  char *filelocation, bool verbose, bool append = true, bool issync = false);
-		bool log(LogLevel l,const char *logformat,...);
+		bool log(LogLevel l, const char *logformat, ...)__attribute__((format(printf,3,4)));
 		LogLevel getlevel();
 		bool logclose();
+		void removeConsole();
 
 	public:
 		const static unsigned int M_LOG_PATH_LEN = 250;
@@ -47,5 +48,5 @@ class LogWriter {
 extern LogWriter WARN_W;
 extern LogWriter INFO_W;
 
-bool log_init(LogLevel l, const char* modulename, const char* logdir, bool verbose);
+bool logInit(LogLevel l, const char* modulename, const char* logdir, bool verbose);
 #endif
